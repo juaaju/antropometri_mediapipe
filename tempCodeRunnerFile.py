@@ -1,0 +1,1 @@
+image_path = ['images/tes2/baby_up.jpg', 'images/tes2/baby_side.jpeg'] ### GANTI PATH INI
