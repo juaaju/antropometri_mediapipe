@@ -3,6 +3,7 @@ from mediapipe.tasks.python import vision
 import mediapipe as mp
 import numpy as np
 from utility import calculate_distance, draw_landmarks_on_image, find_first_one
+from matplotlib import pyplot as plt
 
 def get_input_point(image):
   base_options = python.BaseOptions(model_asset_path='model/pose_landmarker_lite.task')
@@ -54,7 +55,7 @@ def get_input_point(image):
       ])
 
 
-  annotated_image = draw_landmarks_on_image(image.numpy_view(), detection_result)
+  #annotated_image = draw_landmarks_on_image(image.numpy_view(), detection_result)
   segmentation_mask = detection_result.segmentation_masks[0].numpy_view()
   segmentation_mask=segmentation_mask.astype(np.uint8)
   visualized_mask = np.repeat(segmentation_mask[:, :, np.newaxis], 3, axis=2) * 255
@@ -66,10 +67,10 @@ def get_input_point(image):
   #plt.show()
 
   # Display mask result
-  #plt.figure(figsize=(10, 10))
-  #plt.imshow(visualized_mask)
-  #plt.title(f"Mask Result")
-  #plt.show()
+#   plt.figure(figsize=(10, 10))
+#   plt.imshow(visualized_mask)
+#   plt.title(f"Mask Result")
+#   plt.show()
 
   #segment_coordinates = np.where(segmentation_mask == 1)
   #segment_x = segment_coordinates[1]
@@ -77,3 +78,5 @@ def get_input_point(image):
   top_head = find_first_one(segmentation_mask, int(coords[0][1]))
 
   return coords, right_foot, left_foot, segmentation_mask, top_head
+
+# get_input_point('images/pengukuran2.jpg')

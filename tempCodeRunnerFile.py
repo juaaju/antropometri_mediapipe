@@ -1,1 +1,2 @@
-image_path = ['images/tes2/baby_up.jpg', 'images/tes2/baby_side.jpeg'] ### GANTI PATH INI
+    COIN_COEFFICIENT1 = detect_yolo(img1)
+    COIN_COEFFICIENT2 = detect_yolo(img2)

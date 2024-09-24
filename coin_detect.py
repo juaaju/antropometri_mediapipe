@@ -3,6 +3,30 @@ import torch
 import cv2
 import matplotlib.pyplot as plt
 
+def detect_coords(img):
+    model = torch.hub.load('.', 'custom', path='model/best.pt', source='local', force_reload=True)
+    # Image
+    # Inference
+    results = model(img)
+
+    # Results, change the flowing to: results.show()
+    df = results.pandas().xyxy[0]  # or .show(), .save(), .crop(), .pandas(), etc
+    df = df[df['confidence'] > 0.6]
+    df['x'] = df['xmax'] - df['xmin']
+    df['y'] = df['ymax'] - df['ymin']
+    df['x_tengah'] = (df['xmin'] + df['xmax']) / 2
+    df['y_tengah'] = (df['ymin'] + df['ymax']) / 2
+    df = df.sort_values('x')
+    df = df.reset_index()
+    x = df['x_tengah'][0]
+    y = df['y_tengah'][0]
+    # print(df)
+    coords = np.array([[x,y]])
+
+    return coords
+
+
+
 #coin detect using yolo
 def detect_yolo(img):
   COIN_DIAMETER = 2.7 #cm
